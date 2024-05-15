@@ -1,5 +1,5 @@
 from flask import Blueprint
-from models import ParkingLot, Slot
+from backend.models.models import ParkingLot, Slot
 
 
 lot_app = Blueprint("LotApp", __name__)
