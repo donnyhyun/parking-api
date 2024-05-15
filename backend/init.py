@@ -1,4 +1,4 @@
-from models import db, Slot, ParkingLot
+from backend.models.models import db, Slot, ParkingLot
 
 p1 = ParkingLot(
     capacity=10,
