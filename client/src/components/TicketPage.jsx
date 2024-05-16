@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 import styled from 'styled-components';
 import KeyPad from './KeyPad'
 
@@ -18,6 +19,7 @@ function TicketPage() {
 
   return (
     <div>
+      <h1>Parking Service </h1>
       <div>
         <label>Enter your license plate: </label>
       </div>
@@ -29,6 +31,7 @@ function TicketPage() {
         variant="outlined"
       />
       <KeyPad onButtonClick={handleButtonClick} />
+      <Button variant="contained" >Enter</Button>
     </div>
   )
 }
