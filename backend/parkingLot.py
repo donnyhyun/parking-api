@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from backend.models.models import db, Slot, Ticket
+from models.models import db, Slot, Ticket
 import random
 from datetime import datetime
 
