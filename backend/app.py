@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from backend.models.models import db
+from models.models import db
 from init import populate_db
 from parkingLot import park_app
 from ticket import ticket_app

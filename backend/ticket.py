@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from backend.models.models import Ticket
+from models.models import Ticket
 
 ticket_app = Blueprint("TicketApp", __name__)
 
