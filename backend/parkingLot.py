@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from models.models import db, Slot, Ticket
 import random
 from datetime import datetime
@@ -20,11 +20,11 @@ def park_vehicle():
         if parked.exit_time:
             db.session.delete(parked)
         else:
-            return "Vehicle is already parked.", 400
+            return jsonify({"message": "Vehicle is already parked."}), 400
 
     open_slots = Slot.query.filter_by(lot_id=lot_id, occupied=False, size=size).all()
     if len(open_slots) == 0:
-        return "No open space available.", 404
+        return jsonify({"message": "No open space available."}), 404
 
     idx = random.randint(1, len(open_slots))
     sid = open_slots[idx-1].id
@@ -33,7 +33,8 @@ def park_vehicle():
     new_ticket.slot.occupied = True
     db.session.add(new_ticket)
     db.session.commit()
-    return "Success: Vehicle parked.", 200
+
+    return jsonify({"message": f"Success: Vehicle {name} with plate {plate} parked successfully."}), 200
 
 
 @park_app.route("/exit", methods=['POST'])
