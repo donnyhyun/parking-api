@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import styled from 'styled-components';
 import KeyPad from './KeyPad'
 
@@ -11,16 +13,7 @@ const TicketTextField = styled(TextField)`
 function TicketPage() {
   const [licensePlate, setLicensePlate] = useState('');
   const [vehicleName, setVehicleName] = useState('');
-
-  const handleButtonClick = (value) => {
-    if (value === 'C') {
-      setLicensePlate('');
-    } else if (value === '←') {
-      setLicensePlate(prevInput => prevInput.slice(0, -1));
-    } else {
-      setLicensePlate(prevInput => prevInput + value);
-    }
-  };
+  const [errorOpen, setErrorOpen] = useState(false);
 
   const handleEnterClick = async () => {
     try {
@@ -36,11 +29,21 @@ function TicketPage() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error('Server error');
+      }
+
       const data = await response.json();
       console.log('Server response:', data);
     } catch (error) {
       console.error('Error sending license plate:', error);
+      setErrorOpen(true);
     }
+  };
+
+  const handleClose = (_, reason) => {
+    if (reason === 'clickaway') return;
+    setErrorOpen(false);
   };
 
   return (
@@ -66,8 +69,20 @@ function TicketPage() {
         onChange={(e) => setLicensePlate(e.target.value)}
         variant="outlined"
       />
-      <KeyPad onButtonClick={handleButtonClick} />
+      <KeyPad value={licensePlate} setValue={setLicensePlate} />
       <Button variant="contained" onClick={handleEnterClick}>Enter</Button>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={errorOpen}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Failed to submit. Please try again.
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
