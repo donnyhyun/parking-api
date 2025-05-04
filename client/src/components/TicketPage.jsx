@@ -1,48 +1,48 @@
-import { useState } from 'react'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import styled from 'styled-components';
-import KeyPad from './KeyPad'
+import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import styled from "styled-components";
+import KeyPad from "./KeyPad";
 
 const TicketTextField = styled(TextField)`
   margin-top: 6px;
 `;
 
 function TicketPage() {
-  const [licensePlate, setLicensePlate] = useState('');
-  const [vehicleName, setVehicleName] = useState('');
+  const [licensePlate, setLicensePlate] = useState("");
+  const [vehicleName, setVehicleName] = useState("");
   const [errorOpen, setErrorOpen] = useState(false);
 
   const handleEnterClick = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:5001/park?lot_id=1`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: vehicleName,
           plate: licensePlate,
-          size: 'medium',
+          size: "medium",
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Server error');
+        throw new Error("Server error");
       }
 
       const data = await response.json();
-      console.log('Server response:', data);
+      console.log("Server response:", data);
     } catch (error) {
-      console.error('Error sending license plate:', error);
+      console.error("Error sending license plate:", error);
       setErrorOpen(true);
     }
   };
 
   const handleClose = (_, reason) => {
-    if (reason === 'clickaway') return;
+    if (reason === "clickaway") return;
     setErrorOpen(false);
   };
 
@@ -70,21 +70,23 @@ function TicketPage() {
         variant="outlined"
       />
       <KeyPad value={licensePlate} setValue={setLicensePlate} />
-      <Button variant="contained" onClick={handleEnterClick}>Enter</Button>
+      <Button variant="contained" onClick={handleEnterClick}>
+        Enter
+      </Button>
 
       {/* Error Snackbar */}
       <Snackbar
         open={errorOpen}
         autoHideDuration={4000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           Failed to submit. Please try again.
         </Alert>
       </Snackbar>
     </div>
-  )
+  );
 }
 
 export default TicketPage;
