@@ -1,10 +1,10 @@
-import './App.css';
-import TabNav from './components/TabNav';
-import LoginPage from './components/LoginPage';
-import TicketPage from './components/TicketPage';
-import ExitPage from './components/ExitPage';
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import "./App.css";
+import TabNav from "./components/TabNav";
+import LoginPage from "./components/LoginPage";
+import TicketPage from "./components/TicketPage";
+import ExitPage from "./components/ExitPage";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (

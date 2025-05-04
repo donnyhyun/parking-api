@@ -1,21 +1,21 @@
 .keypad {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    max-width: 200px;
-    margin: 15px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 200px;
+  margin: 15px auto;
 }
 
 .keypad-button {
-    padding: 20px;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 20px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .keypad-button:hover {
-    background-color: #ccc;
+  background-color: #ccc;
 }
