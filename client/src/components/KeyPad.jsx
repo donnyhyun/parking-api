@@ -1,7 +1,18 @@
 import React from 'react';
 import './KeyPad.css';
 
-function Keypad({ onButtonClick }) {
+function Keypad({ value, setValue }) {
+
+  const handleButtonClick = (input) => {
+    if (input === 'C') {
+      setValue('');
+    } else if (input === '←') {
+      setValue(prev => prev.slice(0, -1));
+    } else {
+      setValue(prev => prev + input);
+    }
+  };
+
   const buttons = [
       '1', '2', '3',
       '4', '5', '6',
@@ -14,7 +25,7 @@ function Keypad({ onButtonClick }) {
       {buttons.map(button => (
         <button
           key={button}
-          onClick={() => onButtonClick(button)}
+          onClick={() => handleButtonClick(button)}
           className="keypad-button"
         >
         {button}
