@@ -27,5 +27,5 @@ docs/_build/
 *.db
 
 # npm
-/client/node_modules/
-/client/package-lock.json
+/frontend/node_modules/
+/frontend/package-lock.json
