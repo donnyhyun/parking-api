@@ -1,22 +1,39 @@
-## Instructions on deploying locally
+# Backend Service
 
-- After cloning the entire branch, run the app in virtual environment by `python3 -m venv venv` at root directory. Activate it by running command `source venv/bin/activate`. 
-- Install necessary packages as mentioned below.
-- run `python3 app.py` at root directory to run the API. 
-- The app should start running on localhost with default port 5000 (in my case it was http://127.0.0.1:5000). 
+## Quickstart
 
-## Assets needed during deployment
+> Following commands should be run at the backend root (`/backend`)
 
-- Must have **Python3.1** or higher. It should also have sqlite built-in.
-- Need to install **Flask** and **Flask-SQLAlchemy** using pip in order to run the app.
-  ```
-  pip install flask flask-sqlalchemy
-  ```
+#### Run the app in virtual environment:
+```shell
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
 
-## External references used
+#### Install necessary packages
 
-I referred to the Flask-SQLAlchemy Documentation (https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/) for various functions and their usages.
-I also used Postman (https://www.postman.com/) to make mock API calls to test my endpoints.
+```shell
+$ pip install flask flask-sqlalchemy
+```
+
+#### Start Flask backend
+
+```shell
+$ python3 app.py
+```
+
+The server will be up at http://127.0.0.1:5000
+
+## Requirements
+- Must have **Python3.1** or higher
+- SQLite
+- **Flask** and **Flask-SQLAlchemy**
+  
+
+## External references
+
+- [Flask-SQLAlchemy Documentation](https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/)
+- [Postman](https://www.postman.com/)
 
 
 ## API
@@ -29,10 +46,3 @@ I also used Postman (https://www.postman.com/) to make mock API calls to test my
 - GET `/ticket` : Get all parking tickets from all parking lots.
 - GET `/ticket?lot_id=<id>` : Get tickets from the specific lot.
 - GET `/ticket/<plate>`: Get the ticket of a specific vehicle
-
-## Some points of improvement
-
-- Add more functionalities to parking lot such as managing profits
-- Using Docker for large deployment
-- Using a different database such as PostgreSQL or MongoDB for flexibility and scalability
-- Creating and using view templates for a more user-friendly interface
