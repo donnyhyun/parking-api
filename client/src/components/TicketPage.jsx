@@ -69,7 +69,7 @@ function TicketPage() {
         onChange={(e) => setLicensePlate(e.target.value)}
         variant="outlined"
       />
-      <KeyPad value={licensePlate} setValue={setLicensePlate} />
+      <KeyPad setValue={setLicensePlate} />
       <Button variant="contained" onClick={handleEnterClick}>
         Enter
       </Button>

@@ -46,7 +46,7 @@ function ExitPage() {
         onChange={(e) => setLicensePlate(e.target.value)}
         sx={{ mb: 2, width: "300px" }}
       />
-      <KeyPad value={licensePlate} setValue={setLicensePlate} />
+      <KeyPad setValue={setLicensePlate} />
       <Button variant="contained" color="primary" onClick={handleExit}>
         Exit
       </Button>

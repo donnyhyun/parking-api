@@ -1,7 +1,7 @@
 import React from "react";
 import "./KeyPad.css";
 
-function Keypad({ value, setValue }) {
+function Keypad({ setValue }) {
   const handleButtonClick = (input) => {
     if (input === "C") {
       setValue("");
