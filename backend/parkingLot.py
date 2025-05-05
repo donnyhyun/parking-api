@@ -10,7 +10,7 @@ park_app = Blueprint("ParkApp", __name__)
 def park_vehicle():
     lot_id = request.args.get("lot_id")
     if not lot_id:
-        return "Please specify lot number.", 400
+        return jsonify({"message": "Please specify lot number."}), 400
     name = request.json["name"]
     plate = request.json["plate"]
     size = request.json["size"]
@@ -42,8 +42,8 @@ def exit_vehicle():
     plate = request.json["plate"]
     ticket = Ticket.query.filter_by(plate_num=plate).first()
     if not ticket or ticket.exit_time:
-        return "Vehicle does not exist.", 404
+        return jsonify({"message": f"Vehicle with plate {plate} does not exist."}), 404
     ticket.exit_time = datetime.now()
     ticket.slot.occupied = False
     db.session.commit()
-    return "Success: Vehicle exited.", 200
+    return jsonify({"message": f"Success: Vehicle with plate {plate} exited."}), 200

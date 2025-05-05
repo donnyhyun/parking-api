@@ -10,12 +10,22 @@ function ExitPage() {
 
   const handleExit = async () => {
     try {
-      const response = await fetch(``, {
+      const response = await fetch(`http://127.0.0.1:5001/exit`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          plate: licensePlate,
+        }),
       });
 
       const result = await response.json();
       console.log("Exit response:", result);
+
+      if (!response.ok) {
+        throw new Error("Server error");
+      }
     } catch (error) {
       console.error("Error processing exit:", error);
       setErrorOpen(true);

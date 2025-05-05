@@ -28,7 +28,7 @@ class Ticket(db.Model):
     sid = db.Column(db.Integer, db.ForeignKey('slot.id'))
     lid = db.Column(db.Integer, db.ForeignKey('lot.id'))
     name = db.Column(db.String, nullable=True)
-    plate_num = db.Column(db.String, nullable=False)
+    plate_num = db.Column(db.String, nullable=False, unique=True)
     park_time = db.Column(db.DateTime, default=datetime.now)
     exit_time = db.Column(db.DateTime, default=None)
 
