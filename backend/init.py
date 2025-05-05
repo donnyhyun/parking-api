@@ -13,46 +13,52 @@ p2 = ParkingLot(
 s1 = Slot(
     lot_id=1,
     occupied=False,
-    size="medium"
+    size="suv"
 )
 
 s2 = Slot(
     lot_id=1,
     occupied=False,
-    size="small"
+    size="sedan"
 )
 
 s3 = Slot(
     lot_id=2,
     occupied=False,
-    size="large"
+    size="truck"
 )
 
 s4 = Slot(
     lot_id=1,
     occupied=False,
-    size="medium"
+    size="suv"
 )
 
 s5 = Slot(
     lot_id=1,
     occupied=False,
-    size="medium"
+    size="suv"
 )
 
 s6 = Slot(
     lot_id=2,
     occupied=False,
-    size="medium"
+    size="suv"
 )
 
 s7 = Slot(
     lot_id=1,
     occupied=False,
-    size="large"
+    size="truck"
+)
+
+s8 = Slot(
+    lot_id=1,
+    occupied=False,
+    size="sedan"
 )
 
 
 def populate_db():
-    db.session.add_all([p1, p2, s1, s2, s3, s4, s5, s6, s7])
+    db.session.add_all([p1, p2, s1, s2, s3, s4, s5, s6, s7, s8])
     db.session.commit()
