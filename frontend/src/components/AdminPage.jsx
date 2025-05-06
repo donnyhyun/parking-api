@@ -26,12 +26,16 @@ function AdminPage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          mb: 2,
+          position: "relative",
         }}
       >
-        <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Admin
-        </Typography>
-        <Button variant="outlined" color="error" onClick={handleLogout}>
+        <Typography variant="h4">Admin</Typography>
+        <Button
+          variant="outlined"
+          onClick={handleLogout}
+          sx={{ position: "absolute", right: 0, mr: 1 }}
+        >
           Logout
         </Button>
       </Box>
