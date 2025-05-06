@@ -29,8 +29,9 @@ const TicketTextField = styled(TextField)`
 function TicketPage() {
   const [licensePlate, setLicensePlate] = useState("");
   const [vehicleName, setVehicleName] = useState("");
-  const [errorOpen, setErrorOpen] = useState(false);
   const [sizeValue, setSizeValue] = useState("");
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
 
   const handleEnterClick = async () => {
     try {
@@ -47,17 +48,22 @@ function TicketPage() {
           },
         },
       );
-
       console.log("Server response:", response.data);
+      setSuccessOpen(true);
     } catch (error) {
       console.error("Error sending license plate:", error);
       setErrorOpen(true);
     }
   };
 
-  const handleClose = (_, reason) => {
+  const handleErrorClose = (_, reason) => {
     if (reason === "clickaway") return;
     setErrorOpen(false);
+  };
+
+  const handleSuccessClose = (_, reason) => {
+    if (reason === "clickaway") return;
+    setSuccessOpen(false);
   };
 
   return (
@@ -106,11 +112,31 @@ function TicketPage() {
       <Snackbar
         open={errorOpen}
         autoHideDuration={4000}
-        onClose={handleClose}
+        onClose={handleErrorClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleErrorClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
           Failed to submit. Please try again.
+        </Alert>
+      </Snackbar>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={successOpen}
+        autoHideDuration={4000}
+        onClose={handleSuccessClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleSuccessClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Parking Successful
         </Alert>
       </Snackbar>
     </CenteredPage>
