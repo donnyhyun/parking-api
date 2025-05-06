@@ -5,13 +5,14 @@ import { Tabs, Tab, Box } from "@mui/material";
 function TabNav() {
   const location = useLocation();
   const value =
-    location.pathname === "/exit"
-      ? 1
-      : location.pathname === "/ticket"
-        ? 0
-        : false;
+    location.pathname === "/ticket"
+      ? 0
+      : location.pathname === "/exit"
+        ? 1
+        : location.pathname === "/"
+          ? 2
+          : false;
 
-  // Only show tabs on /ticket and /exit
   if (value === false) return null;
 
   return (
@@ -19,6 +20,8 @@ function TabNav() {
       <Tabs value={value}>
         <Tab label="Park" component={Link} to="/ticket" />
         <Tab label="Exit" component={Link} to="/exit" />
+        <Box sx={{ flexGrow: 1 }} />
+        <Tab label="Logout" component={Link} to="/" />
       </Tabs>
     </Box>
   );
