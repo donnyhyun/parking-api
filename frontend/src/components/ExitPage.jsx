@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -7,34 +8,38 @@ import KeyPad from "./KeyPad";
 function ExitPage() {
   const [licensePlate, setLicensePlate] = useState("");
   const [errorOpen, setErrorOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
 
   const handleExit = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5001/exit`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        `http://127.0.0.1:5001/exit`,
+        {
           plate: licensePlate,
-        }),
-      });
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
 
-      const result = await response.json();
-      console.log("Exit response:", result);
-
-      if (!response.ok) {
-        throw new Error("Server error");
-      }
+      console.log("Exit response:", response.data);
+      setSuccessOpen(true);
     } catch (error) {
       console.error("Error processing exit:", error);
       setErrorOpen(true);
     }
   };
 
-  const handleClose = (_, reason) => {
+  const handleErrorClose = (_, reason) => {
     if (reason === "clickaway") return;
     setErrorOpen(false);
+  };
+
+  const handleSuccessClose = (_, reason) => {
+    if (reason === "clickaway") return;
+    setSuccessOpen(false);
   };
 
   return (
@@ -65,11 +70,31 @@ function ExitPage() {
       <Snackbar
         open={errorOpen}
         autoHideDuration={4000}
-        onClose={handleClose}
+        onClose={handleErrorClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleErrorClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
           Failed to submit. Please try again.
+        </Alert>
+      </Snackbar>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={successOpen}
+        autoHideDuration={4000}
+        onClose={handleSuccessClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleSuccessClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Exit Successful
         </Alert>
       </Snackbar>
     </Box>
