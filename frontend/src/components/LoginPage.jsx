@@ -14,7 +14,7 @@ function LoginPage() {
       setPasswordError("Please enter a password");
       return;
     }
-    let path = `/ticket`;
+    const path = password === "admin" ? "/admin" : "/ticket";
     navigate(path);
   };
   return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { MenuItem, TextField } from "@mui/material";
+import axios from "axios";
+import { MenuItem, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -33,26 +34,21 @@ function TicketPage() {
 
   const handleEnterClick = async () => {
     try {
-      const payload = JSON.stringify({
-        name: vehicleName,
-        plate: licensePlate,
-        size: sizeValue,
-      });
-      console.log("Park Payload:", payload);
-      const response = await fetch(`http://127.0.0.1:5001/park?lot_id=1`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `http://127.0.0.1:5001/park?lot_id=1`,
+        {
+          name: vehicleName,
+          plate: licensePlate,
+          size: sizeValue,
         },
-        body: payload,
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
 
-      const data = await response.json();
-      console.log("Server response:", data);
-
-      if (!response.ok) {
-        throw new Error("Server error");
-      }
+      console.log("Server response:", response.data);
     } catch (error) {
       console.error("Error sending license plate:", error);
       setErrorOpen(true);
@@ -66,7 +62,7 @@ function TicketPage() {
 
   return (
     <CenteredPage>
-      <h1>Parking Service </h1>
+      <Typography variant="h4">Parking Service</Typography>
       <RowContainer>
         <TextField
           select

@@ -4,7 +4,7 @@ from models.models import Ticket
 ticket_app = Blueprint("TicketApp", __name__)
 
 
-@ticket_app.route("/ticket", methods=["GET"])
+@ticket_app.route("/tickets", methods=["GET"])
 def get_tickets():
     tickets = []
     lot_id = request.args.get("lot_id")
