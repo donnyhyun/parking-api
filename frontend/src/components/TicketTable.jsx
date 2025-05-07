@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -9,11 +10,16 @@ import {
   TableRow,
   Paper,
   TableContainer,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 function TicketTable() {
   const [tickets, setTickets] = useState([]);
   const [lotId] = useState("");
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -30,35 +36,66 @@ function TicketTable() {
     fetchTickets();
   }, [lotId]);
 
+  const filteredTickets = tickets.filter((ticket) => {
+    if (filter === "all") return true;
+    if (filter === "parked") return ticket.exit_time == null;
+    if (filter === "exited") return ticket.exit_time != null;
+    return true;
+  });
+
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Ticket ID</TableCell>
-            <TableCell>Slot ID</TableCell>
-            <TableCell>Lot ID</TableCell>
-            <TableCell>Model</TableCell>
-            <TableCell>Plate</TableCell>
-            <TableCell>Park Time</TableCell>
-            <TableCell>Exit Time</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tickets.map((ticket) => (
-            <TableRow key={ticket.ticket_id}>
-              <TableCell>{ticket.ticket_id}</TableCell>
-              <TableCell>{ticket.slot_id}</TableCell>
-              <TableCell>{ticket.lot_id || "N/A"}</TableCell>
-              <TableCell>{ticket.model_name}</TableCell>
-              <TableCell>{ticket.plate_num}</TableCell>
-              <TableCell>{ticket.park_time}</TableCell>
-              <TableCell>{ticket.exit_time || "—"}</TableCell>
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          mb: 2,
+          ml: 2,
+          display: "flex",
+          justifyContent: "flex-start",
+        }}
+      >
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel>Filter</InputLabel>
+          <Select
+            value={filter}
+            label="Filter"
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="parked">Parked</MenuItem>
+            <MenuItem value="exited">Exited</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Ticket ID</TableCell>
+              <TableCell>Slot ID</TableCell>
+              <TableCell>Lot ID</TableCell>
+              <TableCell>Model</TableCell>
+              <TableCell>Plate</TableCell>
+              <TableCell>Park Time</TableCell>
+              <TableCell>Exit Time</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {filteredTickets.map((ticket) => (
+              <TableRow key={ticket.ticket_id}>
+                <TableCell>{ticket.ticket_id}</TableCell>
+                <TableCell>{ticket.slot_id}</TableCell>
+                <TableCell>{ticket.lot_id || "N/A"}</TableCell>
+                <TableCell>{ticket.model_name}</TableCell>
+                <TableCell>{ticket.plate_num}</TableCell>
+                <TableCell>{ticket.park_time}</TableCell>
+                <TableCell>{ticket.exit_time || "—"}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
