@@ -1,8 +1,8 @@
 import { Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import TicketTable from "./TicketTable";
+import LotsTable from "./LotsTable";
 
-function AdminPage() {
+function AdminLotsPage() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -39,9 +39,9 @@ function AdminPage() {
           Logout
         </Button>
       </Box>
-      <TicketTable />
+      <LotsTable />
     </Box>
   );
 }
 
-export default AdminPage;
+export default AdminLotsPage;

@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Tabs, Tab, Box } from "@mui/material";
 
-function TabNav() {
+function UserTabNav() {
   const location = useLocation();
   const value =
     location.pathname === "/ticket"
@@ -27,4 +27,4 @@ function TabNav() {
   );
 }
 
-export default TabNav;
+export default UserTabNav;
