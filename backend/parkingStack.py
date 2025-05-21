@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from models.models import ParkingLot, Slot
 
 
@@ -16,7 +16,7 @@ def get_stack():
             "description": lot.description
         }
         res.append(data)
-    return res, 200
+    return jsonify(res), 200
 
 
 @lot_app.route("/lot/<lot_id>", methods=['GET'])
