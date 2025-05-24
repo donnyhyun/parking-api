@@ -1,6 +1,5 @@
 import "./App.css";
-import UserTabNav from "./components/UserTabNav";
-import AdminTabNav from "./components/admin/AdminTabNav";
+import TabNav from "./components/TabNav";
 import LoginPage from "./components/LoginPage";
 import TicketPage from "./components/TicketPage";
 import ExitPage from "./components/ExitPage";
@@ -11,15 +10,26 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 function AppContent() {
   const location = useLocation();
-  const userTabPaths = ["/ticket", "/exit"];
-  const showUserTabNav = userTabPaths.includes(location.pathname);
-  const adminTabPaths = ["/admin/tickets", "/admin/lots"];
-  const showAdminTabNav = adminTabPaths.includes(location.pathname);
+
+  const userTabs = [
+    { label: "Park", path: "/ticket" },
+    { label: "Exit", path: "/exit" },
+  ];
+
+  const adminTabs = [
+    { label: "Tickets", path: "/admin/tickets" },
+    { label: "Lots", path: "/admin/lots" },
+  ];
+
+  const showUserTabNav = userTabs.some((tab) => tab.path === location.pathname);
+  const showAdminTabNav = adminTabs.some(
+    (tab) => tab.path === location.pathname,
+  );
 
   return (
     <>
-      {showUserTabNav && <UserTabNav />}
-      {showAdminTabNav && <AdminTabNav />}
+      {showUserTabNav && <TabNav tabs={userTabs} />}
+      {showAdminTabNav && <TabNav tabs={adminTabs} />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/ticket" element={<TicketPage />} />

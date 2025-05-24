@@ -1,14 +1,7 @@
-import { Typography, Box, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Typography, Box } from "@mui/material";
 import TicketTable from "./TicketTable";
 
 function AdminTicketPage() {
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    navigate("/");
-  };
-
   return (
     <Box
       sx={{
@@ -31,13 +24,6 @@ function AdminTicketPage() {
         }}
       >
         <Typography variant="h4">Admin</Typography>
-        <Button
-          variant="outlined"
-          onClick={handleLogout}
-          sx={{ position: "absolute", right: 0, mr: 1 }}
-        >
-          Logout
-        </Button>
       </Box>
       <TicketTable />
     </Box>
