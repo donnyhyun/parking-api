@@ -44,10 +44,10 @@ user:
 admin:
 - GET `/tickets` : Get all parking tickets from all parking lots. 
 - GET `/parking-lots` : List of parking lots.
+- GET `/lot/<lot_id>` : List of parking slots by the lot number.
 
 todo:
 - GET `/all` : List of all parking spaces sorted by lot.
-- GET `/lot/<lot_id>` : List of parking slots by the lot number.
 - GET `/empty/<lot_id>` : List of empty spaces in the lot.
 - GET `/tickets?lot_id=<id>` : Get tickets from the specific lot.
 - GET `/ticket/<plate>`: Get the ticket of a specific vehicle
