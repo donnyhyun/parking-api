@@ -6,6 +6,7 @@ from init import populate_db
 from parkingLot import park_app
 from ticket import ticket_app
 from parkingStack import lot_app
+from user import user_app
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,6 +18,7 @@ app.json.sort_keys = False
 app.register_blueprint(park_app)
 app.register_blueprint(ticket_app)
 app.register_blueprint(lot_app)
+app.register_blueprint(user_app)
 db.init_app(app)
 
 

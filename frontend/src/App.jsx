@@ -2,6 +2,7 @@ import "./App.css";
 import TabNav from "./components/TabNav";
 import LoginPage from "./components/LoginPage";
 import TicketPage from "./components/TicketPage";
+import RegisterPage from "./components/RegisterPage";
 import ExitPage from "./components/ExitPage";
 import AdminTicketPage from "./components/admin/AdminTicketPage";
 import AdminLotsPage from "./components/admin/AdminLotsPage";
@@ -32,6 +33,7 @@ function AppContent() {
       {showAdminTabNav && <TabNav tabs={adminTabs} />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/ticket" element={<TicketPage />} />
         <Route path="/exit" element={<ExitPage />} />
         <Route path="/admin/tickets" element={<AdminTicketPage />} />
