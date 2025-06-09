@@ -19,7 +19,7 @@ function LotsTable() {
   const [lots, setLots] = useState([]);
   const [openRowId, setOpenRowId] = useState(null);
   const [slotsData, setSlotsData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loadingMap, setLoadingMap] = useState({});
 
   useEffect(() => {
     const fetchLots = async () => {
@@ -40,7 +40,7 @@ function LotsTable() {
     setOpenRowId(isOpen ? null : lotId);
 
     if (!isOpen && !slotsData[lotId]) {
-      setLoading(true);
+      setLoadingMap((prev) => ({ ...prev, [lotId]: true }));
       try {
         const res = await axios.get(`http://127.0.0.1:5001/lot/${lotId}`);
         setSlotsData((prev) => ({
@@ -50,7 +50,7 @@ function LotsTable() {
       } catch (error) {
         console.error(`Failed to fetch slots for lot ${lotId}:`, error);
       } finally {
-        setLoading(false);
+        setLoadingMap((prev) => ({ ...prev, [lotId]: false }));
       }
     }
   };
@@ -97,8 +97,8 @@ function LotsTable() {
                       timeout="auto"
                       unmountOnExit
                     >
-                      <Box margin={2}>
-                        {loading && openRowId === lot.id ? (
+                      <Box>
+                        {loadingMap[lot.id] && openRowId === lot.id ? (
                           <CircularProgress size={24} />
                         ) : (
                           <>

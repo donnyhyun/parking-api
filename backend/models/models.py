@@ -32,3 +32,11 @@ class Ticket(db.Model):
     park_time = db.Column(db.DateTime, default=datetime.now)
     exit_time = db.Column(db.DateTime, default=None)
 
+
+class Users(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String, nullable=False, index=True)
+    name = db.Column(db.String, nullable=True)
+    phone_number = db.Column(db.String, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
