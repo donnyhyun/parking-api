@@ -1,11 +1,11 @@
 import { useState } from "react";
-import axios from "axios";
 import { MenuItem, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import styled from "styled-components";
-import KeyPad from "./KeyPad";
+import KeyPad from "../components/KeyPad";
+import { parkVehicle } from "../api/user";
 
 const CenteredPage = styled.div`
   display: flex;
@@ -35,19 +35,7 @@ function TicketPage() {
 
   const handleEnterClick = async () => {
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:5001/park?lot_id=1`,
-        {
-          name: vehicleName,
-          plate: licensePlate,
-          size: sizeValue,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const response = await parkVehicle(vehicleName, licensePlate, sizeValue);
       console.log("Server response:", response.data);
       setSuccessOpen(true);
     } catch (error) {

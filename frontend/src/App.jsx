@@ -1,11 +1,11 @@
 import "./App.css";
 import TabNav from "./components/TabNav";
-import LoginPage from "./components/LoginPage";
-import TicketPage from "./components/TicketPage";
-import RegisterPage from "./components/RegisterPage";
-import ExitPage from "./components/ExitPage";
-import AdminTicketPage from "./components/admin/AdminTicketPage";
-import AdminLotsPage from "./components/admin/AdminLotsPage";
+import LoginPage from "./pages/LoginPage";
+import TicketPage from "./pages/TicketPage";
+import RegisterPage from "./pages/RegisterPage";
+import ExitPage from "./pages/ExitPage";
+import AdminTicketPage from "./pages/AdminTicketPage";
+import AdminLotsPage from "./pages/AdminLotsPage";
 import React from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import KeyPad from "./KeyPad";
+import KeyPad from "../components/KeyPad";
+import { exitVehicle } from "../api/user";
 
 function ExitPage() {
   const [licensePlate, setLicensePlate] = useState("");
@@ -12,18 +12,7 @@ function ExitPage() {
 
   const handleExit = async () => {
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:5001/exit`,
-        {
-          plate: licensePlate,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-
+      const response = await exitVehicle(licensePlate);
       console.log("Exit response:", response.data);
       setSuccessOpen(true);
     } catch (error) {

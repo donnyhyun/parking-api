@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
-import LotsTable from "./LotsTable";
+import TicketTable from "../components/admin/TicketTable";
 
-function AdminLotsPage() {
+function AdminTicketPage() {
   return (
     <Box
       sx={{
@@ -25,9 +25,9 @@ function AdminLotsPage() {
       >
         <Typography variant="h4">Admin</Typography>
       </Box>
-      <LotsTable />
+      <TicketTable />
     </Box>
   );
 }
 
-export default AdminLotsPage;
+export default AdminTicketPage;

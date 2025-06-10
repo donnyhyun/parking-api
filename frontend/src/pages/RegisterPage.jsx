@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { TextField, Button, Stack, Box } from "@mui/material";
+import { registerUser } from "../api/user";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -14,8 +14,8 @@ function RegisterPage() {
 
   const handleRegister = async () => {
     const newErrors = {
-      email: !email.trim(),
       name: !name.trim(),
+      email: !email.trim(),
       phoneNumber: !phoneNumber.trim(),
     };
     setErrors(newErrors);
@@ -24,20 +24,7 @@ function RegisterPage() {
     if (hasError) return;
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:5001/register",
-        {
-          name: name,
-          email: email,
-          phone_number: phoneNumber,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-
+      const response = await registerUser(name, email, phoneNumber);
       console.log(
         "User registered successfully. User ID: " + response.data.userId,
       );
