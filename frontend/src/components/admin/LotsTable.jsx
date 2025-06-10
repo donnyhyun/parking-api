@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment } from "react";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import axios from "axios";
+import { getAllLots, getParkingLotDetails } from "../../api/admin";
 import {
   Table,
   TableBody,
@@ -24,7 +24,7 @@ function LotsTable() {
   useEffect(() => {
     const fetchLots = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5001/parking-lots");
+        const response = await getAllLots();
         setLots(response.data);
         console.log("Parking lots:", response.data);
       } catch (error) {
@@ -42,7 +42,7 @@ function LotsTable() {
     if (!isOpen && !slotsData[lotId]) {
       setLoadingMap((prev) => ({ ...prev, [lotId]: true }));
       try {
-        const res = await axios.get(`http://127.0.0.1:5001/lot/${lotId}`);
+        const res = await getParkingLotDetails(lotId);
         setSlotsData((prev) => ({
           ...prev,
           [lotId]: res.data.spaces,

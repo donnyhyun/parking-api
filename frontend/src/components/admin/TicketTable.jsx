@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-
-import axios from "axios";
 import {
   Box,
   Table,
@@ -15,6 +13,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { getAllTickets } from "../../api/admin";
 
 function TicketTable() {
   const [tickets, setTickets] = useState([]);
@@ -24,9 +23,7 @@ function TicketTable() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5001/tickets", {
-          params: lotId ? { lot_id: lotId } : {},
-        });
+        const response = await getAllTickets(lotId);
         setTickets(response.data.tickets || response.data); // handle both cases
       } catch (error) {
         console.error("Failed to fetch tickets:", error);
