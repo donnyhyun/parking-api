@@ -20,14 +20,12 @@ function TabNav({ tabs }) {
         justifyContent: "space-between",
       }}
     >
-      {/* Left Tabs */}
       <Tabs value={isLogout ? false : currentIndex}>
         {tabs.map((tab, index) => (
           <Tab key={index} label={tab.label} component={Link} to={tab.path} />
         ))}
       </Tabs>
 
-      {/* Logout Tab on Right */}
       <Tabs value={isLogout ? 0 : false}>
         <Tab label="Logout" component={Link} to="/" />
       </Tabs>

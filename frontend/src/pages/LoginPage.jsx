@@ -1,21 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Snackbar, Alert } from "@mui/material";
+import { handleLogin } from "../api/user";
 
 function LoginPage() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     setPasswordError("");
     if ("" === password) {
       setPasswordError("Please enter a password");
       return;
     }
-    const path = password === "admin" ? "/admin/tickets" : "/ticket";
-    navigate(path);
+    try {
+      const res = await handleLogin(password);
+      localStorage.setItem("token", res.data.access_token);
+      console.log("Login success:", res.data);
+
+      const path = password === "admin" ? "/admin/tickets" : "/ticket";
+      navigate(path);
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          setErrorMessage("Login failed: User does not exist");
+          setErrorOpen(true);
+        } else {
+          setErrorMessage("An error occurred during login");
+          setErrorOpen(true);
+        }
+      } else {
+        console.error(error.message);
+      }
+    }
   };
 
   const handleRegister = async () => {
@@ -45,6 +66,22 @@ function LoginPage() {
           Sign Up
         </Button>
       </div>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={errorOpen}
+        autoHideDuration={4000}
+        onClose={() => setErrorOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setErrorOpen(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

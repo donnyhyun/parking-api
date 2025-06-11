@@ -8,6 +8,7 @@ import { exitVehicle } from "../api/user";
 function ExitPage() {
   const [licensePlate, setLicensePlate] = useState("");
   const [errorOpen, setErrorOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [successOpen, setSuccessOpen] = useState(false);
 
   const handleExit = async () => {
@@ -16,6 +17,11 @@ function ExitPage() {
       console.log("Exit response:", response.data);
       setSuccessOpen(true);
     } catch (error) {
+      if (error.response.status === 403) {
+        setErrorMessage("UNAUTHORIZED: Not allowed to exit this vehicle.");
+      } else {
+        setErrorMessage("Failed to exit vehicle.");
+      }
       console.error("Error processing exit:", error);
       setErrorOpen(true);
     }
@@ -67,7 +73,7 @@ function ExitPage() {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Failed to submit. Please try again.
+          {errorMessage}
         </Alert>
       </Snackbar>
 
