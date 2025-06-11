@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from models.models import Users, db
+from flask_jwt_extended import create_access_token
 
 user_app = Blueprint("UserApp", __name__)
 
@@ -19,3 +20,15 @@ def register_user():
     db.session.commit()
 
     return jsonify({"userId": user.id}), 200
+
+
+@user_app.route("/login", methods=["POST"])
+def login_user():
+    phone_number = request.json["phone_number"]
+
+    user = Users.query.filter_by(phone_number=phone_number).first()
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    token = create_access_token(identity=phone_number)
+    return jsonify({"access_token": token}), 200

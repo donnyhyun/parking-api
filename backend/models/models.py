@@ -16,7 +16,7 @@ class ParkingLot(db.Model):
 class Slot(db.Model):
     __tablename__ = "slot"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    lot_id = db.Column(db.Integer, db.ForeignKey('lot.id'), nullable=False)
+    lot_id = db.Column(db.Integer, db.ForeignKey("lot.id"), nullable=False)
     occupied = db.Column(db.Boolean, default=False)
     size = db.Column(db.String)
     ticket = db.relationship("Ticket", backref="slot")
@@ -25,12 +25,21 @@ class Slot(db.Model):
 class Ticket(db.Model):
     __tablename__ = "ticket"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    sid = db.Column(db.Integer, db.ForeignKey('slot.id'))
-    lid = db.Column(db.Integer, db.ForeignKey('lot.id'))
-    name = db.Column(db.String, nullable=True)
-    plate_num = db.Column(db.String, nullable=False, unique=True)
+    slot_id = db.Column(db.Integer, db.ForeignKey("slot.id"))
+    lot_id = db.Column(db.Integer, db.ForeignKey("lot.id"))
+    vehicle_id = db.Column(db.Integer, db.ForeignKey("vehicle.id"))
     park_time = db.Column(db.DateTime, default=datetime.now)
     exit_time = db.Column(db.DateTime, default=None)
+
+
+class Vehicle(db.Model):
+    __tablename__ = "vehicle"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    plate_num = db.Column(db.String, nullable=False, unique=True)
+    model = db.Column(db.String, nullable=True)
+    size = db.Column(db.String, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
 
 class Users(db.Model):
