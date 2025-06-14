@@ -1,4 +1,3 @@
-import React from "react";
 import "./KeyPad.css";
 
 function Keypad({ setValue }) {

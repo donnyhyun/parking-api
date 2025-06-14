@@ -1,4 +1,4 @@
-from models.models import db, Slot, ParkingLot, Users
+from app.models.models import db, Slot, ParkingLot, Users
 
 p1 = ParkingLot(capacity=10, description="Small local parking space")
 
@@ -36,3 +36,4 @@ def populate_db():
         [p1, p2, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, admin]
     )
     db.session.commit()
+    print("Database seeded.")

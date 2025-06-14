@@ -15,14 +15,18 @@ function ExitPage() {
     try {
       const response = await exitVehicle(licensePlate);
       console.log("Exit response:", response.data);
+      setErrorOpen(false);
       setSuccessOpen(true);
     } catch (error) {
-      if (error.response.status === 403) {
+      if (error.response.status === 404) {
+        setErrorMessage("Vehicle not found. Please check the license plate.");
+      } else if (error.response.status === 403) {
         setErrorMessage("UNAUTHORIZED: Not allowed to exit this vehicle.");
       } else {
         setErrorMessage("Failed to exit vehicle.");
       }
       console.error("Error processing exit:", error);
+      setSuccessOpen(false);
       setErrorOpen(true);
     }
   };

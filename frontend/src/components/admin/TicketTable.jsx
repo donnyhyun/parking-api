@@ -65,7 +65,7 @@ function TicketTable() {
         </FormControl>
       </Box>
       <TableContainer component={Paper}>
-        <Table>
+        <Table sx={{ tableLayout: "fixed", minWidth: 500 }}>
           <TableHead>
             <TableRow>
               <TableCell>Ticket ID</TableCell>
