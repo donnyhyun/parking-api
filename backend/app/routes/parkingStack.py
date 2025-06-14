@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from models.models import ParkingLot, Slot
+from app.models.models import ParkingLot, Slot
 
 
 lot_app = Blueprint("LotApp", __name__)

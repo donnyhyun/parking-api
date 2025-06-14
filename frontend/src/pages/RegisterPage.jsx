@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { TextField, Button, Stack, Box } from "@mui/material";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { TextField, Button, Stack, Box, Snackbar, Alert } from "@mui/material";
 import { registerUser } from "../api/user";
 
 function RegisterPage() {
@@ -11,6 +12,8 @@ function RegisterPage() {
     name: false,
     phoneNumber: false,
   });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const handleRegister = async () => {
     const newErrors = {
@@ -28,12 +31,12 @@ function RegisterPage() {
       console.log(
         "User registered successfully. User ID: " + response.data.userId,
       );
+      setSnackbarMessage("Registration successful!");
+      setSnackbarOpen(true);
     } catch (error) {
       console.error("Registration failed:", error);
-      alert(
-        error.response?.data?.message ||
-          "An error occurred during registration.",
-      );
+      setSnackbarMessage("Registration failed. Please try again.");
+      setSnackbarOpen(true);
     }
   };
 
@@ -74,7 +77,34 @@ function RegisterPage() {
             Register
           </Button>
         </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            mb: 3,
+            height: 40,
+          }}
+        >
+          <Button variant="text" component={Link} to="/">
+            ← Back
+          </Button>
+        </Box>
       </Stack>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarMessage.includes("failed") ? "error" : "success"}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

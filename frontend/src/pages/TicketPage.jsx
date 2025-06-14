@@ -32,14 +32,18 @@ function TicketPage() {
   const [sizeValue, setSizeValue] = useState("");
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleEnterClick = async () => {
     try {
       const response = await parkVehicle(vehicleName, licensePlate, sizeValue);
       console.log("Server response:", response.data);
+      setErrorOpen(false);
       setSuccessOpen(true);
     } catch (error) {
       console.error("Error sending license plate:", error);
+      setErrorMessage("Error parking vehicle. Please check the details.");
+      setSuccessOpen(false);
       setErrorOpen(true);
     }
   };
@@ -108,7 +112,7 @@ function TicketPage() {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Failed to submit. Please try again.
+          {errorMessage}
         </Alert>
       </Snackbar>
 

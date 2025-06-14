@@ -6,7 +6,6 @@ import RegisterPage from "./pages/RegisterPage";
 import ExitPage from "./pages/ExitPage";
 import AdminTicketPage from "./pages/AdminTicketPage";
 import AdminLotsPage from "./pages/AdminLotsPage";
-import React from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 function AppContent() {

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models.models import db, Slot, Ticket, Vehicle, Users
+from app.models.models import db, Slot, Ticket, Vehicle, Users
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import random
 from datetime import datetime
@@ -66,7 +66,9 @@ def exit_vehicle():
 
     plate = request.json["plate"]
     vehicle = Vehicle.query.filter_by(plate_num=plate).first()
-    if not vehicle or vehicle.user_id != user.id:
+    if not vehicle:
+        return jsonify({"message": "Vehicle not found."}), 404
+    if vehicle.user_id != user.id:
         return jsonify({"message": "Unauthorized or vehicle not found"}), 403
 
     ticket = Ticket.query.filter_by(vehicle_id=vehicle.id).first()

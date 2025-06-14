@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Tabs, Tab, Box } from "@mui/material";
 
@@ -7,6 +6,10 @@ function TabNav({ tabs }) {
 
   const currentIndex = tabs.findIndex((tab) => tab.path === location.pathname);
   const isLogout = location.pathname === "/";
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+  };
 
   if (currentIndex === -1 && !isLogout) return null;
 
@@ -27,7 +30,7 @@ function TabNav({ tabs }) {
       </Tabs>
 
       <Tabs value={isLogout ? 0 : false}>
-        <Tab label="Logout" component={Link} to="/" />
+        <Tab label="Logout" component={Link} to="/" onClick={handleLogout} />
       </Tabs>
     </Box>
   );

@@ -13,7 +13,7 @@ $ source venv/bin/activate
 #### Install necessary packages
 
 ```shell
-$ pip install flask flask-sqlalchemy
+$ pip install -r requirements.txt
 ```
 
 #### Start Flask backend
