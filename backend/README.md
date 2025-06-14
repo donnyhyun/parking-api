@@ -19,7 +19,7 @@ $ pip install -r requirements.txt
 #### Start Flask backend
 
 ```shell
-$ python3 app.py
+$ python3 run.py
 ```
 
 The server will be up at http://127.0.0.1:5000
