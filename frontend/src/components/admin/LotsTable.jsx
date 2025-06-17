@@ -21,6 +21,12 @@ function LotsTable() {
   const [slotsData, setSlotsData] = useState({});
   const [loadingMap, setLoadingMap] = useState({});
 
+  const sizeMap = {
+    sedan: "Small",
+    suv: "Medium",
+    truck: "Large",
+  };
+
   useEffect(() => {
     const fetchLots = async () => {
       try {
@@ -107,10 +113,18 @@ function LotsTable() {
                               <Table size="small" sx={{ mt: 1 }}>
                                 <TableHead>
                                   <TableRow>
-                                    <TableCell>#</TableCell>
-                                    <TableCell>Slot ID</TableCell>
-                                    <TableCell>Occupied</TableCell>
-                                    <TableCell>Size</TableCell>
+                                    <TableCell sx={{ fontWeight: "bold" }}>
+                                      #
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: "bold" }}>
+                                      Slot ID
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: "bold" }}>
+                                      Occupied
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: "bold" }}>
+                                      Size
+                                    </TableCell>
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -121,7 +135,9 @@ function LotsTable() {
                                       <TableCell>
                                         {slot.occupied ? "Yes" : "No"}
                                       </TableCell>
-                                      <TableCell>{slot.size}</TableCell>
+                                      <TableCell>
+                                        {sizeMap[slot.size] || slot.size}
+                                      </TableCell>
                                     </TableRow>
                                   ))}
                                 </TableBody>

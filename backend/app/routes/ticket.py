@@ -17,8 +17,8 @@ def get_tickets():
             data = {
                 "ticket_id": t.id,
                 "slot_id": t.slot_id,
-                "model_name": v.model,
-                "plate_num": v.plate_num,
+                "model_name": v.model if v is not None else "-",
+                "plate_num": v.plate_num if v is not None else "-",
                 "park_time": t.park_time,
                 "exit_time": t.exit_time,
             }

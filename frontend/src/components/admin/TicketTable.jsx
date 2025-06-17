@@ -12,13 +12,20 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from "@mui/material";
-import { getAllTickets } from "../../api/admin";
+import { getAllTickets, forceExitVehicle } from "../../api/admin";
 
 function TicketTable() {
   const [tickets, setTickets] = useState([]);
   const [lotId] = useState("");
   const [filter, setFilter] = useState("all");
+  const [open, setOpen] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -39,6 +46,28 @@ function TicketTable() {
     if (filter === "exited") return ticket.exit_time != null;
     return true;
   });
+
+  const handleOpenModal = (ticket) => {
+    setSelectedTicket(ticket);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedTicket(null);
+  };
+
+  const handleForceExit = async (licensePlate) => {
+    try {
+      const res = await forceExitVehicle(licensePlate);
+      console.log("Force exit response:", res.data);
+      setOpen(false);
+      setSelectedTicket(null);
+    } catch (error) {
+      console.error("Failed to force exit vehicle:", error);
+      alert("Failed to force exit vehicle. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -79,7 +108,17 @@ function TicketTable() {
           </TableHead>
           <TableBody>
             {filteredTickets.map((ticket) => (
-              <TableRow key={ticket.ticket_id}>
+              <TableRow
+                key={ticket.ticket_id}
+                hover
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5",
+                  },
+                }}
+                onClick={() => handleOpenModal(ticket)}
+              >
                 <TableCell>{ticket.ticket_id}</TableCell>
                 <TableCell>{ticket.slot_id}</TableCell>
                 <TableCell>{ticket.lot_id || "N/A"}</TableCell>
@@ -92,6 +131,23 @@ function TicketTable() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Force Exit</DialogTitle>
+        <DialogContent>
+          Are you sure you want to force exit vehicle with plate{" "}
+          {selectedTicket?.plate_num}?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button
+            onClick={() => handleForceExit(selectedTicket.plate_num)}
+            color="error"
+          >
+            Force Exit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
