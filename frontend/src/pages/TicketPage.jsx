@@ -30,13 +30,19 @@ function TicketPage() {
   const [licensePlate, setLicensePlate] = useState("");
   const [vehicleName, setVehicleName] = useState("");
   const [sizeValue, setSizeValue] = useState("");
+  const [lotValue, setLotValue] = useState(0);
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleEnterClick = async () => {
     try {
-      const response = await parkVehicle(vehicleName, licensePlate, sizeValue);
+      const response = await parkVehicle(
+        lotValue,
+        vehicleName,
+        licensePlate,
+        sizeValue,
+      );
       console.log("Server response:", response.data);
       setErrorOpen(false);
       setSuccessOpen(true);
@@ -64,6 +70,18 @@ function TicketPage() {
       <RowContainer>
         <TextField
           select
+          label="Lot #"
+          value={lotValue}
+          onChange={(e) => setLotValue(e.target.value)}
+          variant="outlined"
+          size="medium"
+          sx={{ width: "60px" }}
+        >
+          <MenuItem value="1">1</MenuItem>
+          <MenuItem value="2">2</MenuItem>
+        </TextField>
+        <TextField
+          select
           label="Size"
           value={sizeValue}
           onChange={(e) => setSizeValue(e.target.value)}
@@ -77,7 +95,7 @@ function TicketPage() {
         </TextField>
         <TicketTextField
           id="vehicle-name"
-          label="Enter your vehicle model: "
+          label="Enter your vehicle model"
           value={vehicleName}
           onChange={(e) => setVehicleName(e.target.value)}
           variant="outlined"

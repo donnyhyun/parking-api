@@ -86,3 +86,27 @@ def exit_vehicle():
     ticket.slot.occupied = False
     db.session.commit()
     return jsonify({"message": "Success: Vehicle exited."}), 200
+
+
+@park_app.route("/exit/force", methods=["POST"])
+def force_exit_vehicle():
+    plate = request.json["plate"]
+    vehicle = Vehicle.query.filter_by(plate_num=plate).first()
+    if not vehicle:
+        return jsonify({"message": "Vehicle not found."}), 404
+
+    ticket = Ticket.query.filter_by(vehicle_id=vehicle.id).first()
+    if not ticket or ticket.exit_time:
+        return (
+            jsonify(
+                {
+                    "message": f"Vehicle with plate number {vehicle.plate_num} does not exist."
+                }
+            ),
+            404,
+        )
+
+    ticket.exit_time = datetime.now()
+    ticket.slot.occupied = False
+    db.session.commit()
+    return jsonify({"message": "Success: Vehicle exited by force."}), 200

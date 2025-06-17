@@ -4,10 +4,11 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from app.models.models import db
 from app.routes.main import main_app
-from app.routes.parkingLot import park_app
+from app.routes.parking import park_app
 from app.routes.ticket import ticket_app
 from app.routes.parkingStack import lot_app
 from app.routes.user import user_app
+from app.routes.vehicle import vehicle_app
 from app.populate import populate_db
 
 
@@ -35,6 +36,7 @@ def create_app():
     app.register_blueprint(lot_app)
     app.register_blueprint(user_app)
     app.register_blueprint(main_app)
+    app.register_blueprint(vehicle_app)
 
     # Create the database tables and populate with initial data
     with app.app_context():

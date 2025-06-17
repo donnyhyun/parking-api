@@ -1,7 +1,7 @@
 import client from "./client";
 
-export const parkVehicle = (vehicleName, licensePlate, sizeValue) =>
-  client.post("/park?lot_id=1", {
+export const parkVehicle = (lotNum, vehicleName, licensePlate, sizeValue) =>
+  client.post(`/park?lot_id=${lotNum}`, {
     model: vehicleName,
     plate: licensePlate,
     size: sizeValue,

@@ -35,7 +35,23 @@ function RegisterPage() {
       setSnackbarOpen(true);
     } catch (error) {
       console.error("Registration failed:", error);
-      setSnackbarMessage("Registration failed. Please try again.");
+      if (error.response) {
+        if (error.response.status === 400) {
+          setSnackbarMessage(
+            "Failed: Invalid input. Please check your details.",
+          );
+        } else if (error.response.status === 409) {
+          setSnackbarMessage("Failed: User already exists.");
+        } else {
+          setSnackbarMessage(
+            "Failed: An unexpected error occurred. Please try again.",
+          );
+        }
+      } else {
+        setSnackbarMessage(
+          "Failed: Network error. Please check your connection.",
+        );
+      }
       setSnackbarOpen(true);
     }
   };
@@ -99,7 +115,7 @@ function RegisterPage() {
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
-          severity={snackbarMessage.includes("failed") ? "error" : "success"}
+          severity={snackbarMessage.includes("Failed") ? "error" : "success"}
           sx={{ width: "100%" }}
         >
           {snackbarMessage}

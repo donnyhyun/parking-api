@@ -49,3 +49,4 @@ class Users(db.Model):
     name = db.Column(db.String, nullable=True)
     phone_number = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
+    deactivated_at = db.Column(db.DateTime, default=None)
