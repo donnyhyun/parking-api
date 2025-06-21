@@ -17,6 +17,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  TextField,
 } from "@mui/material";
 import { getAllTickets, forceExitVehicle } from "../../api/admin";
 import { getLotLabel } from "../../utils/labelMappings";
@@ -27,6 +28,7 @@ function TicketTable() {
   const [filter, setFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -41,12 +43,16 @@ function TicketTable() {
     fetchTickets();
   }, [lotId]);
 
-  const filteredTickets = tickets.filter((ticket) => {
-    if (filter === "all") return true;
-    if (filter === "parked") return ticket.exit_time == null;
-    if (filter === "exited") return ticket.exit_time != null;
-    return true;
-  });
+  const filteredTickets = tickets
+    .filter((ticket) => {
+      if (filter === "all") return true;
+      if (filter === "parked") return ticket.exit_time == null;
+      if (filter === "exited") return ticket.exit_time != null;
+      return true;
+    })
+    .filter((ticket) =>
+      ticket.plate_num.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
 
   const handleOpenModal = (ticket) => {
     setSelectedTicket(ticket);
@@ -78,7 +84,9 @@ function TicketTable() {
           mb: 2,
           ml: 2,
           display: "flex",
-          justifyContent: "flex-start",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 2,
         }}
       >
         <FormControl sx={{ minWidth: 120 }}>
@@ -93,6 +101,14 @@ function TicketTable() {
             <MenuItem value="exited">Exited</MenuItem>
           </Select>
         </FormControl>
+        <TextField
+          label="Search by Plate"
+          variant="outlined"
+          size="small"
+          sx={{ minWidth: 200, mr: 2 }}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ tableLayout: "fixed", minWidth: 500 }}>

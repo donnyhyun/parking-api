@@ -10,6 +10,9 @@ export const getAllTickets = async (lotId) =>
     params: lotId ? { lot_id: lotId } : {},
   });
 
+export const getTicketByLicensePlate = async (licensePlate) =>
+  client.get(`/ticket/${licensePlate}`);
+
 export const getAllUsers = async () => client.get("/users");
 
 export const forceExitVehicle = async (licensePlate) =>
