@@ -54,5 +54,4 @@ admin:
 - POST `/deactivate` : Deactivate user account and remove vehicles.
 
 todo:
-- GET `/empty/<lot_id>` : List of empty spaces in the lot.
 - GET `/ticket/<plate>`: Get the ticket of a specific vehicle

@@ -7,8 +7,9 @@ db = SQLAlchemy()
 class ParkingLot(db.Model):
     __tablename__ = "lot"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    capacity = db.Column(db.Integer)
-    description = db.Column(db.String)
+    name = db.Column(db.String, nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.String, nullable=True)
     slots = db.relationship("Slot", backref="lot")
     tickets = db.relationship("Ticket", backref="lot")
 
@@ -18,7 +19,7 @@ class Slot(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     lot_id = db.Column(db.Integer, db.ForeignKey("lot.id"), nullable=False)
     occupied = db.Column(db.Boolean, default=False)
-    size = db.Column(db.String)
+    size = db.Column(db.String, nullable=False)
     ticket = db.relationship("Ticket", backref="slot")
 
 

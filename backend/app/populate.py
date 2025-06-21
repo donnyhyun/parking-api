@@ -1,8 +1,10 @@
 from app.models.models import db, Slot, ParkingLot, Users
 
-p1 = ParkingLot(capacity=10, description="Small local parking space")
+p1 = ParkingLot(name="A", capacity=10, description="Medium-sized local parking space")
 
-p2 = ParkingLot(capacity=300, description="Large parking complex")
+p2 = ParkingLot(
+    name="B", capacity=300, description="Small parking complex for large vehicles"
+)
 
 s1 = Slot(lot_id=1, occupied=False, size="suv")
 
@@ -28,12 +30,14 @@ s11 = Slot(lot_id=1, occupied=False, size="suv")
 
 s12 = Slot(lot_id=1, occupied=False, size="truck")
 
+s13 = Slot(lot_id=2, occupied=False, size="truck")
+
 admin = Users(id=1, email="admin@test.com", name="Admin", phone_number="admin")
 
 
 def populate_db():
     db.session.add_all(
-        [p1, p2, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, admin]
+        [p1, p2, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, admin]
     )
     db.session.commit()
     print("Database seeded.")

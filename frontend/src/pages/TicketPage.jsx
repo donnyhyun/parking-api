@@ -77,8 +77,8 @@ function TicketPage() {
           size="medium"
           sx={{ width: "60px" }}
         >
-          <MenuItem value="1">1</MenuItem>
-          <MenuItem value="2">2</MenuItem>
+          <MenuItem value="1">A</MenuItem>
+          <MenuItem value="2">B</MenuItem>
         </TextField>
         <TextField
           select
