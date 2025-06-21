@@ -17,7 +17,7 @@ def park_vehicle():
 
     lot_id = request.args.get("lot_id")
     if not lot_id:
-        return jsonify({"message": "Please specify lot number."}), 400
+        return jsonify({"message": "Please specify lot."}), 400
     model = request.json["model"]
     plate = request.json["plate"]
     size = request.json["size"]

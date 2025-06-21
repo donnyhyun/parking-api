@@ -19,6 +19,7 @@ import {
   Button,
 } from "@mui/material";
 import { getAllTickets, forceExitVehicle } from "../../api/admin";
+import { getLotLabel } from "../../utils/labelMappings";
 
 function TicketTable() {
   const [tickets, setTickets] = useState([]);
@@ -31,7 +32,7 @@ function TicketTable() {
     const fetchTickets = async () => {
       try {
         const response = await getAllTickets(lotId);
-        setTickets(response.data.tickets || response.data); // handle both cases
+        setTickets(response.data.tickets || response.data);
       } catch (error) {
         console.error("Failed to fetch tickets:", error);
       }
@@ -98,8 +99,8 @@ function TicketTable() {
           <TableHead>
             <TableRow>
               <TableCell>Ticket ID</TableCell>
-              <TableCell>Slot ID</TableCell>
               <TableCell>Lot ID</TableCell>
+              <TableCell>Slot #</TableCell>
               <TableCell>Model</TableCell>
               <TableCell>Plate</TableCell>
               <TableCell>Park Time</TableCell>
@@ -120,8 +121,8 @@ function TicketTable() {
                 onClick={() => handleOpenModal(ticket)}
               >
                 <TableCell>{ticket.ticket_id}</TableCell>
+                <TableCell>{getLotLabel(ticket.lot_id)}</TableCell>
                 <TableCell>{ticket.slot_id}</TableCell>
-                <TableCell>{ticket.lot_id || "N/A"}</TableCell>
                 <TableCell>{ticket.model_name}</TableCell>
                 <TableCell>{ticket.plate_num}</TableCell>
                 <TableCell>{ticket.park_time}</TableCell>

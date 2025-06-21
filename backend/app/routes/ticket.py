@@ -31,7 +31,7 @@ def get_tickets():
             data = {
                 "ticket_id": t.id,
                 "slot_id": t.slot_id,
-                "lot_id": t.lot_id,
+                "lot_id": t.lot_id if t.lot_id else "-",
                 "model_name": v.model,
                 "plate_num": v.plate_num,
                 "park_time": t.park_time,
@@ -48,8 +48,8 @@ def get_ticket(plate):
         return "Vehicle does not exist.", 404
     data = {
         "ticket_id": t.id,
-        "slot_id": t.sid,
-        "lot_id": t.lid,
+        "slot_id": t.slot_id,
+        "lot_id": t.lot_id,
         "model_name": t.name,
         "plate_num": t.plate_num,
         "park_time": t.park_time,

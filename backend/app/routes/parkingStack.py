@@ -22,28 +22,12 @@ def get_parkinglot(lot_id):
     for slot in slots:
         data = {"id": slot.id, "occupied": slot.occupied, "size": slot.size}
         res.append(data)
-    return {"lot_num": lot_id, "spaces": res}, 200
-
-
-@lot_app.route("/empty/<lot_id>", methods=["GET"])
-def get_empty_slots(lot_id):
-    open_slots = Slot.query.filter_by(lot_id=lot_id, occupied=False).all()
-    res = []
-    for slot in open_slots:
-        data = {
-            "lot_id": slot.lot_id,
-            "id": slot.id,
-            "occupied": slot.occupied,
-            "size": slot.size,
-        }
-        res.append(data)
-
-    return {"lot_num": lot_id, "open_spaces": res}, 200
+    return {"lot_id": lot_id, "spaces": res}, 200
 
 
 @lot_app.route("/all", methods=["GET"])
 def get_all_spaces_by_lot():
-    spaces = []
+    spaces = {}
     num_lots = ParkingLot.query.count()
     for i in range(1, num_lots + 1):
         slots = Slot.query.filter_by(lot_id=i).all()
@@ -51,5 +35,5 @@ def get_all_spaces_by_lot():
         for slot in slots:
             data = {"id": slot.id, "occupied": slot.occupied, "size": slot.size}
             res.append(data)
-        spaces.append({"lot_num": i, "parking_slots": res})
-    return spaces, 200
+        spaces[i] = res
+    return jsonify(spaces), 200

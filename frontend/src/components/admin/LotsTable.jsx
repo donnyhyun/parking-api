@@ -14,18 +14,13 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import { getLotLabel, getSizeLabel } from "../../utils/labelMappings";
 
 function LotsTable() {
   const [lots, setLots] = useState([]);
   const [openRowId, setOpenRowId] = useState(null);
   const [slotsData, setSlotsData] = useState({});
   const [loadingMap, setLoadingMap] = useState({});
-
-  const sizeMap = {
-    sedan: "Small",
-    suv: "Medium",
-    truck: "Large",
-  };
 
   useEffect(() => {
     const fetchLots = async () => {
@@ -89,7 +84,7 @@ function LotsTable() {
                       )}
                     </IconButton>
                   </TableCell>
-                  <TableCell>{lot.id}</TableCell>
+                  <TableCell>{getLotLabel(lot.id)}</TableCell>
                   <TableCell>{lot.capacity}</TableCell>
                   <TableCell>{lot.description || "N/A"}</TableCell>
                 </TableRow>
@@ -136,7 +131,7 @@ function LotsTable() {
                                         {slot.occupied ? "Yes" : "No"}
                                       </TableCell>
                                       <TableCell>
-                                        {sizeMap[slot.size] || slot.size}
+                                        {getSizeLabel(slot.size) || slot.size}
                                       </TableCell>
                                     </TableRow>
                                   ))}
