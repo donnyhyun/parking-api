@@ -43,16 +43,19 @@ def get_tickets():
 
 @ticket_app.route("/ticket/<plate>", methods=["GET"])
 def get_ticket(plate):
-    t = Ticket.query.filter_by(plate_num=plate).first()
-    if not t:
+    tickets = Ticket.query.filter_by(plate_num=plate).all()
+    if not tickets:
         return "Vehicle does not exist.", 404
-    data = {
-        "ticket_id": t.id,
-        "slot_id": t.slot_id,
-        "lot_id": t.lot_id,
-        "model_name": t.name,
-        "plate_num": t.plate_num,
-        "park_time": t.park_time,
-        "exit_time": t.exit_time,
-    }
-    return data, 200
+    res = []
+    for t in tickets:
+        data = {
+            "ticket_id": t.id,
+            "slot_id": t.slot_id,
+            "lot_id": t.lot_id,
+            "model_name": t.name,
+            "plate_num": t.plate_num,
+            "park_time": t.park_time,
+            "exit_time": t.exit_time,
+        }
+        res.append(data)
+    return res, 200

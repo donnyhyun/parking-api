@@ -46,12 +46,10 @@ user:
 admin:
 - GET `/tickets` : Get all parking tickets from all parking lots. 
 - GET `/tickets?lot_id=<id>` : Get tickets from the specific lot.
+- GET `/ticket/<plate>`: Get the ticket of a specific vehicle
 - GET `/parking-lots` : List of all parking lots.
 - GET `/lot/<lot_id>` : List of parking slots by the lot number.
 - GET `/users` : Get all users.
 - GET `/vehicles` : Get all vehicles information.
 - POST `/exit/force` : Force exit a vehicle.
 - POST `/deactivate` : Deactivate user account and remove vehicles.
-
-todo:
-- GET `/ticket/<plate>`: Get the ticket of a specific vehicle
