@@ -1,0 +1,20 @@
+name: parking_lot
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./backend:/app
+    environment:
+      - FLASK_ENV=development
+    command: flask run --host=0.0.0.0 --port=5001
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
