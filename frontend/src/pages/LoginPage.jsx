@@ -39,6 +39,12 @@ function LoginPage() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onButtonClick();
+    }
+  };
+
   const handleRegister = async () => {
     navigate("/register");
   };
@@ -54,6 +60,7 @@ function LoginPage() {
           value={password}
           placeholder="Enter your password here"
           onChange={(ev) => setPassword(ev.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <label className="errorLabel">{passwordError}</label>
       </div>
@@ -62,6 +69,7 @@ function LoginPage() {
         <button className={"loginButton"} onClick={onButtonClick}>
           Login
         </button>
+        <br />
         <Button variant="outlined" onClick={handleRegister} sx={{ mt: 1 }}>
           Sign Up
         </Button>

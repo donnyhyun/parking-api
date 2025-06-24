@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { MenuItem, TextField, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { MenuItem, TextField, Typography, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -35,6 +35,22 @@ function TicketPage() {
   const [successOpen, setSuccessOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        console.log("Enter key pressed!");
+        handleEnterClick();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Clean up
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const handleEnterClick = async () => {
     try {
       const response = await parkVehicle(
@@ -67,56 +83,63 @@ function TicketPage() {
   return (
     <CenteredPage>
       <Typography variant="h4">Parking Service</Typography>
-      <RowContainer>
-        <TextField
-          select
-          label="Lot #"
-          value={lotValue}
-          onChange={(e) => setLotValue(e.target.value)}
-          variant="outlined"
-          size="medium"
-          sx={{ width: "60px" }}
-        >
-          <MenuItem value="1">A</MenuItem>
-          <MenuItem value="2">B</MenuItem>
-        </TextField>
-        <TextField
-          select
-          label="Size"
-          value={sizeValue}
-          onChange={(e) => setSizeValue(e.target.value)}
-          variant="outlined"
-          size="medium"
-          sx={{ width: "100px" }}
-        >
-          <MenuItem value="sedan">Sedan</MenuItem>
-          <MenuItem value="suv">SUV</MenuItem>
-          <MenuItem value="truck">Truck</MenuItem>
-        </TextField>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleEnterClick();
+        }}
+      >
+        <RowContainer>
+          <TextField
+            select
+            label="Lot #"
+            value={lotValue}
+            onChange={(e) => setLotValue(e.target.value)}
+            variant="outlined"
+            size="medium"
+            sx={{ width: "60px" }}
+          >
+            <MenuItem value="1">A</MenuItem>
+            <MenuItem value="2">B</MenuItem>
+          </TextField>
+          <TextField
+            select
+            label="Size"
+            value={sizeValue}
+            onChange={(e) => setSizeValue(e.target.value)}
+            variant="outlined"
+            size="medium"
+            sx={{ width: "100px" }}
+          >
+            <MenuItem value="sedan">Sedan</MenuItem>
+            <MenuItem value="suv">SUV</MenuItem>
+            <MenuItem value="truck">Truck</MenuItem>
+          </TextField>
+          <TicketTextField
+            id="vehicle-name"
+            label="Enter your vehicle model"
+            value={vehicleName}
+            onChange={(e) => setVehicleName(e.target.value)}
+            variant="outlined"
+            sx={{ width: "300px" }}
+          />
+        </RowContainer>
+        <Box sx={{ my: 2 }}>
+          <label>Enter your license plate: </label>
+        </Box>
         <TicketTextField
-          id="vehicle-name"
-          label="Enter your vehicle model"
-          value={vehicleName}
-          onChange={(e) => setVehicleName(e.target.value)}
+          id="outlined-basic"
+          label="License #"
+          value={licensePlate}
+          onChange={(e) => setLicensePlate(e.target.value)}
           variant="outlined"
-          sx={{ width: "300px" }}
+          sx={{ width: "250px" }}
         />
-      </RowContainer>
-      <div>
-        <label>Enter your license plate: </label>
-      </div>
-      <TicketTextField
-        id="outlined-basic"
-        label="License #"
-        value={licensePlate}
-        onChange={(e) => setLicensePlate(e.target.value)}
-        variant="outlined"
-        sx={{ width: "250px" }}
-      />
-      <KeyPad setValue={setLicensePlate} />
-      <Button variant="contained" onClick={handleEnterClick}>
-        Enter
-      </Button>
+        <KeyPad setValue={setLicensePlate} />
+        <Button variant="contained" onClick={handleEnterClick}>
+          Enter
+        </Button>
+      </form>
 
       {/* Error Snackbar */}
       <Snackbar

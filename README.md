@@ -2,6 +2,11 @@
 
 A full-stack web application for managing vehicles across multiple parking locations.
 
+## Quickstart
+```shell
+make run
+```
+
 ### Documentation & Instructions
 - 📦 [Backend Instructions](backend/README.md)
 - 💻 [Frontend Instructions](frontend/README.md)
