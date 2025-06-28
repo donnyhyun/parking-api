@@ -9,6 +9,7 @@ function TabNav({ tabs }) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
   };
 
   if (currentIndex === -1 && !isLogout) return null;

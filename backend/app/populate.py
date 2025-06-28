@@ -34,10 +34,12 @@ s13 = Slot(lot_id=2, occupied=False, size="truck")
 
 admin = Users(id=1, email="admin@test.com", name="Admin", phone_number="admin")
 
+test = Users(id=2, email="test2@test.com", name="Test", phone_number=7796)
+
 
 def populate_db():
     db.session.add_all(
-        [p1, p2, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, admin]
+        [p1, p2, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, admin, test]
     )
     db.session.commit()
     print("Database seeded.")

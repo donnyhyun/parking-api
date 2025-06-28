@@ -26,6 +26,7 @@ class Slot(db.Model):
 class Ticket(db.Model):
     __tablename__ = "ticket"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     slot_id = db.Column(db.Integer, db.ForeignKey("slot.id"))
     lot_id = db.Column(db.Integer, db.ForeignKey("lot.id"))
     vehicle_id = db.Column(db.Integer, db.ForeignKey("vehicle.id"))

@@ -8,14 +8,16 @@ import AdminTicketPage from "./pages/AdminTicketPage";
 import AdminLotsPage from "./pages/AdminLotsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminVehiclesPage from "./pages/AdminVehiclesPage";
+import UserTicketPage from "./pages/UserTicketPage";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 function AppContent() {
   const location = useLocation();
 
   const userTabs = [
-    { label: "Park", path: "/ticket" },
+    { label: "Park", path: "/park" },
     { label: "Exit", path: "/exit" },
+    { label: "Parked Vehicles", path: "/user/vehicles" },
   ];
 
   const adminTabs = [
@@ -37,8 +39,9 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/ticket" element={<TicketPage />} />
+        <Route path="/park" element={<TicketPage />} />
         <Route path="/exit" element={<ExitPage />} />
+        <Route path="/user/vehicles" element={<UserTicketPage />} />
         <Route path="/admin/tickets" element={<AdminTicketPage />} />
         <Route path="/admin/lots" element={<AdminLotsPage />} />
         <Route path="/admin/users" element={<AdminUsersPage />} />

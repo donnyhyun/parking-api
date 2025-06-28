@@ -23,3 +23,6 @@ export const handleLogin = (phoneNumber) =>
   client.post("/login", {
     phone_number: phoneNumber,
   });
+
+export const getUserTickets = (userId) =>
+  client.get(`/user/tickets?user_id=${userId}`);

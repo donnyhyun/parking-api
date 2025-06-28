@@ -39,7 +39,7 @@ def login_user():
         return jsonify({"message": "User not found"}), 404
 
     token = create_access_token(identity=phone_number)
-    return jsonify({"access_token": token}), 200
+    return jsonify({"user_id": user.id, "access_token": token}), 200
 
 
 @user_app.route("/users", methods=["GET"])

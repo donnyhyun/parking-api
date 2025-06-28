@@ -20,9 +20,10 @@ function LoginPage() {
     try {
       const res = await handleLogin(password);
       localStorage.setItem("token", res.data.access_token);
-      console.log("Login success:", res.data);
+      localStorage.setItem("userId", res.data.user_id);
+      console.log("Login successful");
 
-      const path = password === "admin" ? "/admin/tickets" : "/ticket";
+      const path = password === "admin" ? "/admin/tickets" : "/park";
       navigate(path);
     } catch (error) {
       if (error.response) {

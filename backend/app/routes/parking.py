@@ -27,12 +27,10 @@ def park_vehicle():
         vehicle = Vehicle(user_id=user.id, plate_num=plate, model=model, size=size)
         db.session.add(vehicle)
 
-    parked = Ticket.query.filter_by(vehicle_id=vehicle.id).first()
+    parked = Ticket.query.filter_by(vehicle_id=vehicle.id, exit_time=None).first()
+    print(parked)
     if parked:
-        if parked.exit_time:
-            db.session.delete(parked)
-        else:
-            return jsonify({"message": "Vehicle is already parked."}), 400
+        return jsonify({"message": "Vehicle is already parked."}), 400
 
     open_slots = Slot.query.filter_by(lot_id=lot_id, occupied=False, size=size).all()
     if len(open_slots) == 0:
@@ -42,7 +40,11 @@ def park_vehicle():
     park_space = Slot.query.get(sid)
 
     new_ticket = Ticket(
-        slot_id=sid, lot_id=lot_id, vehicle_id=vehicle.id, slot=park_space
+        user_id=user.id,
+        slot_id=sid,
+        lot_id=lot_id,
+        vehicle_id=vehicle.id,
+        slot=park_space,
     )
     new_ticket.slot.occupied = True
     db.session.add(new_ticket)
