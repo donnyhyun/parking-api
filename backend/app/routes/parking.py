@@ -28,7 +28,6 @@ def park_vehicle():
         db.session.add(vehicle)
 
     parked = Ticket.query.filter_by(vehicle_id=vehicle.id, exit_time=None).first()
-    print(parked)
     if parked:
         return jsonify({"message": "Vehicle is already parked."}), 400
 
